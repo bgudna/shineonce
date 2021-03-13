@@ -1,0 +1,55 @@
+!% $OMIT_UNUSED_ROUTINES=1
+! ----------------------------------------------------------------------------
+!   Setting up basic scaffolding for project - change later!
+! ----------------------------------------------------------------------------
+
+Switches e;  ! Use Economize mode - abbreviations are in parser.h
+
+Constant Story      "ShineOnce project";
+Constant Headline   "^By some guy.^";
+!Constant DEBUG;
+
+Include "Parser";
+
+! SceneryReply allows you to construct the behavior of your scenery. It could be 
+! set to a string or a routine, or left undefined. The standard response, except 
+! for EXAMINE, is: "No need to concern yourself with that."
+[SceneryReply;
+    Take: 
+        "Even if that were possible, it wouldn't help you.";
+    Search:
+        "There is no need searching this.";
+    default:
+        rfalse;
+];
+Include "Scenery"; ! Scenery must be included after Parser but before VerbLib.
+
+Include "VerbLib";
+Include "Grammar";
+
+Constant SL_MISTY "It's quite misty.";
+
+Object Moor "Moor"
+    with
+        description "You are on an eerie moor. A mysterious mist hangs in the air. A forest lies to the east.",
+        e_to Forest,
+        metro_scenery
+            'mysterious' 'mist' SL_MISTY
+            1 'air' "The air is remarkably fresh here.", ! If an object only has one dictionary word, set the first word to 1.
+    has light;
+
+Object Forest "Forest"
+    with
+        description "You are in a dense forest. You can't make out much anyway, due to the mist. The moor is to the west.",
+        w_to Moor,
+        metro_scenery
+            'mysterious' 'mist' SL_MISTY, ! The response, SL_MISTY here, could also be a routine!
+    has light;
+
+[Initialise ;
+    print "This is a demo game. You can refer to the mist as ~mist~, ~mysterious~ or ~mysterious mist~ in both locations.
+        You can also refer to the air on the moor.^^^";
+    location = Moor;
+];
+
+
