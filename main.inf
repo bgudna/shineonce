@@ -10,8 +10,8 @@
 ! $OMIT_UNUSED_ROUTINES=1 makes the compiler remove all routines which
 ! aren't used. This can save some space.
 
-Constant Story      "Minimal";
-Constant Headline   "^A sample game which uses PunyInform.^";
+Constant Story      "ShineOnce";
+Constant Headline   "^Getting to grips with reality.^";
 
 ! Uncomment ONE of the two following lines, to show either time or score/turns
 ! Leaving both commented out makes the library bigger.
@@ -27,10 +27,10 @@ Constant NO_SCORE = 0;
 !Constant OPTIONAL_SL_NO_MOVES;
 
 ! Uncomment to add optional features to PunyInform
-!Constant DEBUG;
+Constant DEBUG;
 !Constant CUSTOM_ABBREVIATIONS;
 !Constant CUSTOM_PLAYER_OBJECT = myPlayerObj;
-Constant OPTIONAL_NO_DARKNESS;
+!Constant OPTIONAL_NO_DARKNESS;
 !Constant OPTIONAL_ALLOW_WRITTEN_NUMBERS;
 !Constant OPTIONAL_EXTENDED_METAVERBS;
 !Constant OPTIONAL_EXTENDED_VERBSET;
@@ -47,12 +47,12 @@ Constant OPTIONAL_NO_DARKNESS;
 !Constant OPTIONAL_ORDERED_TIMERS;
 !Constant OPTIONAL_PROVIDE_UNDO;
 !Constant OPTIONAL_REACTIVE_PARSE_NAME;
-!Constant RUNTIME_ERRORS = 0; ! 0, 1 or 2. 0 = smallest file, 2 = most info
+Constant RUNTIME_ERRORS = 2; ! 0, 1 or 2. 0 = smallest file, 2 = most info
 
 ! Define any library constants you need here, like MAX_SCORE, AMUSING_PROVIDED,
 ! MAX_CARRIED, SACK_OBJECT,  etc.
 
-Constant INITIAL_LOCATION_VALUE = Library;
+!Constant INITIAL_LOCATION_VALUE = Library;
 
 Include "globals.h";
 
@@ -72,9 +72,10 @@ Include "puny.h";
 ! Uncomment to add PunyLib extensions
 !Include "ext_waittime.h";
 
-Object Library "The Lost Woods"
+Object Woods "The Lost Woods"
 	with
-		description "You are in a library.";
+		description "You are in the forbidden forrest.",
+	has light;
 
 Object -> Box "box"
 	with
@@ -83,5 +84,6 @@ Object -> Box "box"
 	has container open openable enterable;
 
 [Initialise;
+	location = Woods;
 	print "^^And so the story begins...^^";
 ];
